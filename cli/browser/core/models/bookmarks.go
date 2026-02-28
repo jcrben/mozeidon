@@ -9,6 +9,7 @@ type Bookmark struct {
 	Title  string `json:"title"`
 	Url    string `json:"url"`
 	Parent string `json:"parent"`
+	Index  int    `json:"index"`
 }
 
 type BookmarkWriteQuery struct {

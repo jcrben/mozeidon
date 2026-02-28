@@ -109,6 +109,7 @@ async function processChunk(items: browser.Bookmarks.BookmarkTreeNode[]) {
       title: p.title,
       url: p.url,
       parent: p.parentPath,
+      index: p.index ?? 0,
     })
   }
   return bms
