@@ -15,6 +15,7 @@ import {
   switchToTab,
   updateTabs,
 } from "./services/tabs"
+import { getProcessMap } from "./services/process-map"
 import { updateProfiles } from "./services/profiles"
 import { getGroups, moveGroup, updateGroup } from "./services/groups"
 import { getWindows } from "./services/windows"
@@ -55,6 +56,8 @@ export async function handler(port: Port, cmd: Command) {
       return await updateProfiles(port, cmd)
     case CommandName.GET_WINDOWS:
       return await getWindows(port, cmd)
+    case CommandName.GET_PROCESS_MAP:
+      return await getProcessMap(port, cmd)
     default:
       log("unknown command received in handler")
       return port.postMessage(Response.end())

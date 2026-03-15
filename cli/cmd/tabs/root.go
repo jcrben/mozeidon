@@ -17,4 +17,5 @@ func init() {
 	TabsCmd.AddCommand(UpdateTabCmd)
 	TabsCmd.AddCommand(DuplicateTabCmd)
 	TabsCmd.AddCommand(InitGroupCmd)
+	TabsCmd.AddCommand(ProcessMapCmd)
 }
