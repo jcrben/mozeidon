@@ -18,5 +18,15 @@
   "browser_action": {
     "default_icon": "icons/trident.svg"
   },
-  "permissions": ["nativeMessaging", "tabs", "sessions", "bookmarks", "history", "tabGroups", "storage", "processes"]
+  "permissions": ["nativeMessaging", "tabs", "sessions", "bookmarks", "history", "tabGroups", "storage"],
+  "experiment_apis": {
+    "procInfo": {
+      "schema": "experiments/procInfo/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["procInfo"]],
+        "script": "experiments/procInfo/parent.js"
+      }
+    }
+  }
 }

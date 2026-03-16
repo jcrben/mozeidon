@@ -1,0 +1,18 @@
+[
+  {
+    "namespace": "procInfo",
+    "description": "Exposes OS process → tab URL mapping via ChromeUtils.requestProcInfo().",
+    "functions": [
+      {
+        "name": "getProcessMap",
+        "type": "function",
+        "description": "Returns OS PID → window URLs for each Firefox content process.",
+        "async": true,
+        "parameters": [],
+        "returns": {
+          "$ref": "Promise"
+        }
+      }
+    ]
+  }
+]
