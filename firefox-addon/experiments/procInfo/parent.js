@@ -21,8 +21,9 @@ this.procInfo = class extends ExtensionAPI {
 
             const entries = [];
             for (const child of procData.children || []) {
-              // Only care about web content processes
-              if (child.type !== "web" && child.type !== "tab") continue;
+              // Only care about web content processes (webIsolated for site-isolated tabs)
+              const webTypes = new Set(["web", "tab", "webIsolated"]);
+              if (!webTypes.has(child.type)) continue;
 
               const urls = [];
               for (const win of child.windows || []) {
