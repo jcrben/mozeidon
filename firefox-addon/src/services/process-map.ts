@@ -4,6 +4,7 @@ import { Command } from "../models/command"
 import { log } from "../logger"
 import { Response } from "../models/response"
 import { handleError, delay } from "../utils"
+import { correlateProcessEntriesToTabIds } from "./processMapCorrelation"
 
 /**
  * Returns a process→tab mapping using the procInfo WebExtension Experiment.
@@ -18,9 +19,6 @@ import { handleError, delay } from "../utils"
  */
 export async function getProcessMap(port: Port, { command: _cmd }: Command) {
   try {
-    // Access procInfo via globalThis.browser (the native Firefox API), not the
-    // webextension-polyfill wrapper, since the polyfill only proxies standard
-    // WebExtension APIs and does not forward custom experiment_apis like procInfo.
     // Access procInfo via globalThis.browser (the native Firefox API), not the
     // webextension-polyfill wrapper, since the polyfill only proxies standard
     // WebExtension APIs and does not forward custom experiment_apis like procInfo.
@@ -63,18 +61,7 @@ export async function getProcessMap(port: Port, { command: _cmd }: Command) {
       }
     }
 
-    // Correlate process URLs with tab IDs
-    const entries: { osPid: number; tabIds: number[] }[] = []
-    for (const entry of rawEntries) {
-      const tabIds: number[] = []
-      for (const url of entry.urls ?? []) {
-        const tabId = urlToTabId.get(url)
-        if (tabId != null) tabIds.push(tabId)
-      }
-      if (tabIds.length > 0) {
-        entries.push({ osPid: entry.osPid, tabIds })
-      }
-    }
+    const entries = correlateProcessEntriesToTabIds(rawEntries, urlToTabId)
 
     log("Sending back", entries.length, "process→tab entries")
     port.postMessage(Response.data(entries))
